@@ -1,3 +1,16 @@
+groupify takes the list
+rock the counts
+for every number in the list
+  if the counts at the number
+    let the value be the counts at the number
+    build the value up
+    put the value into the counts at the number
+  otherwise
+    put 1 into the counts at the number
+  yeah
+baby
+give back the counts, yeah
+
 Absolute takes foo and bar
 if foo > bar
 give back foo - bar
@@ -59,4 +72,26 @@ let total be total with value
 build index up
 end (while)
 
-shout total
+shout "Part 1: " with total
+
+let the counts be groupify taking sort1
+let total be 0
+let index be 0
+while index < limit
+let val0 be sort0 at index
+let val1 be the counts at val0
+if val1
+  shout val0 with ": " with val1
+  let the product be val0 times val1
+  let total be total with the product
+end
+build index up
+end (while)
+
+shout "part 2: " with total
+
+
+
+
+
+
