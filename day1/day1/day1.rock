@@ -1,3 +1,37 @@
+Bubblesort takes list
+	n = list + 0
+	swapped is true
+	while swapped
+		debug list
+		swapped is false
+		index = 1
+		while index < n
+			otherIndex = index - 1
+			shout list at otherIndex
+			shout list at index
+			shout "yeah!"
+			if list at otherIndex is greater than list at index
+				let temp be list at otherIndex
+				let list at otherIndex be list at index
+				let list at index be temp
+				swapped is true
+			end (if list)
+			build index up
+		end (while index < n-1)
+	end (while swapped)
+	give back list
+end (Bubblesort)
+
+rock example with 1, 5, 3, 2, 4
+the thing is "hello everybody watching on Twitch and YouTube"
+shatter the thing
+Debug the thing
+Let output be bubblesort taking the thing
+Debug output
+
+(Let result be bubblesort taking example
+debug example
+debug result
 listen to the line
 while the line ain't nothing
 rock the lines with the line
@@ -20,8 +54,4 @@ yeah
 for every thing in list0, print the thing, yeah
 print "======"
 for every thing in list1, print the thing, yeah
-
-
-
-
-
+)
