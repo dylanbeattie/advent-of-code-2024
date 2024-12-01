@@ -1,15 +1,19 @@
+Absolute takes foo and bar
+if foo > bar
+give back foo - bar
+otherwise
+give back bar - foo
+yeah
+baby
+
 Bubblesort takes list
 	n = list + 0
 	swapped is true
 	while swapped
-		debug list
 		swapped is false
 		index = 1
 		while index < n
 			otherIndex = index - 1
-			shout list at otherIndex
-			shout list at index
-			shout "yeah!"
 			if list at otherIndex is greater than list at index
 				let temp be list at otherIndex
 				let list at otherIndex be list at index
@@ -22,16 +26,6 @@ Bubblesort takes list
 	give back list
 end (Bubblesort)
 
-rock example with 1, 5, 3, 2, 4
-the thing is "hello everybody watching on Twitch and YouTube"
-shatter the thing
-Debug the thing
-Let output be bubblesort taking the thing
-Debug output
-
-(Let result be bubblesort taking example
-debug example
-debug result
 listen to the line
 while the line ain't nothing
 rock the lines with the line
@@ -51,7 +45,18 @@ burn token1 with 10
 rock list1 with token1
 yeah
 
-for every thing in list0, print the thing, yeah
-print "======"
-for every thing in list1, print the thing, yeah
-)
+let sort0 be bubblesort taking list0
+let sort1 be bubblesort taking list1
+
+let limit be sort0 + 0
+let total be 0
+let index be 0
+while index < limit
+let val0 be sort0 at index
+let val1 be sort1 at index
+let value be absolute taking val0 'n' val1
+let total be total with value
+build index up
+end (while)
+
+shout total
