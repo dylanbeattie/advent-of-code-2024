@@ -1,0 +1,27 @@
+listen to the line
+while the line ain't nothing
+rock the lines with the line
+listen to the line, baby
+
+rock list0
+rock list1
+
+the separator is "   "
+for every line in the lines
+split the line into the tokens with the separator
+let token0 be the tokens at 0
+burn token0 with 10
+rock list0 with token0
+let token1 be the tokens at 1
+burn token1 with 10
+rock list1 with token1
+yeah
+
+for every thing in list0, print the thing, yeah
+print "======"
+for every thing in list1, print the thing, yeah
+
+
+
+
+
