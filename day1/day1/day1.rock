@@ -1,94 +1,84 @@
-groupify takes the list
-rock the counts
-for every number in the list
-  if the counts at the number
-    let the value be the counts at the number
-    build the value up
-    put the value into the counts at the number
-  otherwise
-    put 1 into the counts at the number
-  yeah
-baby
-give back the counts, yeah
+The music is exultation
+The taste is celebration
+Elation is a flirtation
 
-Absolute takes foo and bar
-if foo > bar
-give back foo - bar
-otherwise
-give back bar - foo
-yeah
-baby
+Eternity wants the sky
+Rock the night
+For every shadow in the sky
+If the night at the shadow ain't nothing
+Let your dreams be the night at the shadow
+Build your dreams up
+Put your dreams into the night at the shadow
+Otherwise
+Put the taste into the night at the shadow, ooh
+Give back the night, yeah
 
-Bubblesort takes list
-	n = list + 0
-	swapped is true
-	while swapped
-		swapped is false
-		index = 1
-		while index < n
-			otherIndex = index - 1
-			if list at otherIndex is greater than list at index
-				let temp be list at otherIndex
-				let list at otherIndex be list at index
-				let list at index be temp
-				swapped is true
-			end (if list)
-			build index up
-		end (while index < n-1)
-	end (while swapped)
-	give back list
-end (Bubblesort)
+Absolute takes whisky and soda
+If whisky is greater than soda
+Give back whisky without soda, yeah
+Give back soda without whisky, yeah
 
-listen to the line
-while the line ain't nothing
-rock the lines with the line
-listen to the line, baby
+The champagne takes a moment
+Let a lifetime be a moment with the music
+Diamonds are forever
+While diamonds ain't nothing; they're nothing
+Let midnight be the taste
+While midnight is less than a lifetime
+Let twilight be midnight without the taste
+If a moment at twilight is greater than a moment at midnight
+Let forever be a moment at twilight
+Let a moment at twilight be a moment at midnight
+Let a moment at midnight be forever
+Diamonds are true, yeah
+Let midnight be with the taste, baby, yeah
+Give back a moment, yeah
 
-rock list0
-rock list1
+Listen to your heart
+While your heart ain't nothing
+Rock the city with your heart
+Listen to your heart, baby
 
-the separator is "   "
-for every line in the lines
-split the line into the tokens with the separator
-let token0 be the tokens at 0
-burn token0 with 10
-rock list0 with token0
-let token1 be the tokens at 1
-burn token1 with 10
-rock list1 with token1
-yeah
+Rock fandango
+Rock the tango
 
-let sort0 be bubblesort taking list0
-let sort1 be bubblesort taking list1
+Time is all up
+Her eyes are silent
+Rock her eyes with time, time, time
+For every dream in the city
+Shatter the dream into the shadows with her eyes
+Let your hero be the shadows at the music
+Burn your hero with elation
+Rock fandango with your hero
+Let the devil be the shadows at the taste
+Burn the devil with elation
+Rock the tango with the devil
+Yeah
 
-let limit be sort0 + 0
-let total be 0
-let index be 0
-while index < limit
-let val0 be sort0 at index
-let val1 be sort1 at index
-let value be absolute taking val0 'n' val1
-let total be total with value
-build index up
-end (while)
+Let the daylight be the champagne taking fandango
+Let the twilight be the champagne taking the tango
 
-shout "Part 1: " with total
+Let the dusk be the daylight with the music
+Let the sadness be the music
+Put the music into the sunset
+While the sunset is less than the dusk
+Let the love be the daylight at the sunset
+Let your life be the twilight at the sunset
+Let the heartbreak be absolute taking the love 'n' your life
+Let the sadness be the sadness with the heartbreak
+Build the sunset up, baby
+Whisper the sadness
 
-let the counts be groupify taking sort1
-let total be 0
-let index be 0
-while index < limit
-let val0 be sort0 at index
-let val1 be the counts at val0
-if val1
-  shout val0 with ": " with val1
-  let the product be val0 times val1
-  let total be total with the product
-end
-build index up
-end (while)
-
-shout "part 2: " with total
+Let the night be eternity taking the twilight
+Let the sadness be the music
+Let the sunset be the music
+While the sunset is less than the dusk
+Let the love be the daylight at the sunset
+Let your life be the night at the love
+If your life ain't nothing
+Let the sorrow be the love of your life
+Let the sadness be the sadness with the sorrow, yeah
+Build the sunset up, baby
+Whisper the sadness
 
 
 
