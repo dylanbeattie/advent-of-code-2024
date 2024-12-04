@@ -1,26 +1,24 @@
 var lines = File.ReadAllLines("input.txt")
-    .Select(line => line.ToArray())
-    .ToArray();
+    .Select(line => line.ToArray()).ToArray();
 
-var count = 0;
-for (var r = 0; r < lines.Length; r++) {
-    for (var c = 0; c < lines[r].Length; c++) {
-        count += lines.Search(r, c);
-    }
-}
-Console.WriteLine($"Part 1: {count}");
+var part1 = 0;
+for (var r = 0; r < lines.Length; r++)
+    for (var c = 0; c < lines[r].Length; c++)
+        part1 += lines.Search(r, c);
 
-count = 0;
-for (var r = 1; r < lines.Length-1; r++) {
-    for (var c = 1; c < lines[r].Length-1; c++) {
-        if (lines.Mas(r, c)) count++;
-    }
-}
-Console.WriteLine($"Part 2: {count}");
+Console.WriteLine($"Part 1: {part1}");
+
+var part2 = 0;
+for (var r = 1; r < lines.Length-1; r++)
+    for (var c = 1; c < lines[r].Length-1; c++)
+        if (lines.Mas(r, c)) part2++;
+
+Console.WriteLine($"Part 2: {part2}");
+
 public static class GridExtensions {
-    static int[] deltas = [-1, 0, 1];
+	private static readonly int[] deltas = [-1, 0, 1];
     public static int Search(this char[][] grid, int r, int c) {
-        int hits = 0;
+        var hits = 0;
         foreach (var dr in deltas) {
             foreach (var dc in deltas) {
                 if (grid.Xmas(r, c, dr, dc)) hits++;
