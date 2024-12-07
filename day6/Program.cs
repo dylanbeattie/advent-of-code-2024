@@ -23,6 +23,7 @@ foreach (var block in visited) {
 }
 Console.WriteLine($"Part 2: {blocked.Count} ({sw.ElapsedMilliseconds} ms)");
 
+grid.Render();
 public static class Directions {
 	public const char E = '→';
 	public const char W = '←';
@@ -78,4 +79,13 @@ public static class Directions {
 	public static bool Contains(this char[][] grid, (int row, int col) pair)
 		=> pair.row >= 0 && pair.row < grid.Length
 		&& pair.col >= 0 && pair.col < grid[0].Length;
+
+	public static void Render(this char[][] grid) {
+		for (var r = 0; r < grid.Length; r++) {
+			for(var c = 0; c < grid[0].Length; c++) {
+				Console.Write(grid[r][c]);
+			}
+			Console.WriteLine();
+		}
+	}
 }
