@@ -6,10 +6,18 @@ var equations = File.ReadAllLines("input.txt")
 
 var sw = new Stopwatch();
 sw.Start();
-List<Func<long, long, long>> part1Operators = [(a, b) => a * b, (a, b) => a + b];
-var part1 = equations.Where(e => e.Solvable(part1Operators)).Sum(e => e.Answer);
+List<Func<long, long, long>> operators = [(a, b) => a * b, (a, b) => a + b];
+var part1 = equations.Where(e => e.Solvable(operators)).Sum(e => e.Answer);
 sw.Stop();
 Console.WriteLine($"Part 1: {part1} ({sw.ElapsedMilliseconds} ms)");
+
+var concat = (long a, long b) => Int64.Parse(a.ToString() + b);
+var ops2 = operators.Append(concat).ToList();
+sw.Restart();
+var part2 = equations.Where(e => e.Solvable(ops2)).Sum(e => e.Answer);
+sw.Stop();
+Console.WriteLine($"Part 2: {part2} ({sw.ElapsedMilliseconds} ms)");
+
 
 public class Equation {
 	public Equation(string line) {
