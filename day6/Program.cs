@@ -1,10 +1,7 @@
 ﻿using System.Diagnostics;
-
-Console.OutputEncoding = System.Text.Encoding.UTF8;
 var sw = new Stopwatch();
 sw.Start();
 var grid = File.ReadAllLines("input.txt").Select(line => line.ToArray()).ToArray();
-
 var visited = new HashSet<(int, int)>();
 var blocked = new HashSet<(int, int)>();
 var origin = grid.FindStartingPoint();
