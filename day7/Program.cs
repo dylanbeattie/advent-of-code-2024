@@ -2,7 +2,7 @@ using System.Diagnostics;
 using System.Numerics;
 
 var equations = File.ReadAllLines("input.txt")
-	.Select(line => new Equation(line));
+	.Select(line => new Equation(line)).ToList();
 
 var sw = new Stopwatch();
 sw.Start();
@@ -17,7 +17,6 @@ sw.Restart();
 var part2 = equations.Where(e => e.Solvable(ops2)).Sum(e => e.Answer);
 sw.Stop();
 Console.WriteLine($"Part 2: {part2} ({sw.ElapsedMilliseconds} ms)");
-
 
 public class Equation {
 	public Equation(string line) {

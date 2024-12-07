@@ -1,0 +1,78 @@
+The bridge is broken yet again
+A word is taxidermic (0)
+Babar is a mandriarch (10)
+The herd is pachydermic (1)
+
+The jungle is silent
+Rock it like the jungleboogie,
+The bridge is silent
+Rock it like Congo flamenco
+It's with the jungle
+
+The elephant takes your operators
+Cut your operators into pieces using the bridge
+Burn pieces at a word using Babar into the waves
+Cut pieces at the herd using the jungle into the river
+Rock the boat
+For every crocodile in the river
+Burn the crocodile using Babar
+Rock the boat with the crocodile, baby
+Rock the waves with the boat
+Give back the waves, baby
+
+solvable takes equation and operators
+let answer be equation at a word
+let inputs be equation at the herd
+let lhs be inputs at a word
+let rhs be inputs at the herd
+if inputs is the herd give back lhs = answer
+for op in operators
+  let result be op taking lhs, rhs
+  rock result
+  let index be 2
+  while index < inputs
+    rock result with inputs at index
+    index is with 1
+  end
+  let foo be answer
+  rock foo with result
+  if solvable taking foo, operators give back true
+end
+give back false
+end
+
+listen to line
+rock equations
+while line ain't nothing
+let equation be the elephant taking line
+rock equations with equation
+listen to line
+end
+
+add takes x, y giving x + y
+multiply takes x, y giving x * y
+rock operators with add, multiply
+
+let part1 be 0
+for eq in equations
+if solvable taking eq, operators part1 is with eq at 0
+end
+shout "Part 1: " with part1
+let part2 be 0
+
+concat takes x, y
+cast "" + x + y using 10 into token
+give back token
+yeah
+
+rock operators with concat
+
+let part2 be 0
+for eq in equations
+if solvable taking eq, operators part2 is with eq at 0
+end
+shout "Part 2: " with part2
+
+
+
+
