@@ -25,10 +25,11 @@ Cornelius takes confusion and the circus
 Let the answer be confusion at dawn
 Let the question be confusion at dusk
 Let peanuts be the question at dawn
-Let popcorn be the question at dusk
 If the question is dusk give back peanuts is the answer
+Let popcorn be the question at dusk
 For every monkey in the circus
 Let Zephir be the monkey taking peanuts 'n' popcorn
+If Zephir is higher than the answer give back nothing
 Rock Zephir
 Noon is electrifying
 The moon is noon
@@ -71,7 +72,3 @@ Part Two is with the day at dawn, yeah, baby
 
 Shout "Part 1: " with Part One
 Shout "Part 2: " with Part Two
-
-
-
-
