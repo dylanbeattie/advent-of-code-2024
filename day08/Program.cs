@@ -1,6 +1,4 @@
-﻿using System.Text;
-
-var grid = File.ReadAllLines("input.txt")
+﻿var grid = File.ReadAllLines("input.txt")
 	.Select(line => line.ToArray())
 	.ToArray();
 
@@ -22,12 +20,6 @@ foreach (var (key, list) in antennae) {
 	foreach (var antinode in FindAntinodesPart2(list, grid)) part2.Add(antinode);
 }
 
-// var sb = new StringBuilder();
-// for (var row = 0; row < grid.Length; row++) {
-// 	for (var col = 0; col < grid[0].Length; col++) sb.Append(grid[row][col]);
-// 	sb.AppendLine();
-// }
-// Console.WriteLine(sb);
 Console.WriteLine($"Part 1: {part1.Count}");
 Console.WriteLine($"Part 2: {part2.Count}");
 
@@ -78,17 +70,3 @@ public static class Extensions {
 		=> pair.row >= 0 && pair.row < grid.Length
 		&& pair.col >= 0 && pair.col < grid[0].Length;
 }
-
-
-
-
-
-
-// foreach(var integer in AllTheIntegers().Skip(5).Where(i => i % 3 == 0).Take(8)) {
-// 	Console.WriteLine(integer);
-// }
-
-// IEnumerable<int> AllTheIntegers() {
-// 	int i = 0;
-// 	while (true) yield return i++;
-// }

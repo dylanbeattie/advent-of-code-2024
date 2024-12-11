@@ -1,0 +1,22 @@
+listen to line
+while line ain't silent
+shatter line into cells
+rock grid with cells
+listen to line
+end
+
+rock antennae
+for line and row in grid
+for cell and col in line
+if cell ain't "."
+let point be row
+rock point using col
+debug antennae
+debug cell
+rock antennae at cell using point
+end
+end
+
+debug antennae
+
+
