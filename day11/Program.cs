@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 
-var stones = File.ReadAllText("input.txt")
-	.Split(" ").Select(Int64.Parse);
+var stones = File.ReadAllText("input.txt").Split(" ").Select(Int64.Parse);
 
 var cache = new Dictionary<(long, int), long>();
 var sw = new Stopwatch();
@@ -12,55 +11,37 @@ sw.Restart();
 var part2 = stones.Select(s => Blink(s, 75, cache)).Sum();
 Console.WriteLine($"Part 2: {part2} ({sw.ElapsedMilliseconds} ms)");
 
-long Blink(long stone, int times, Dictionary<(long,int), long> cache) {
+long Blink(long stone, int times, Dictionary<(long, int), long> cache) {
 	long result = 1;
-	if (cache.ContainsKey((stone,times))) return cache[(stone,times)];
-	if (times == 0) {
-		cache.Add((stone,times), 1);
-		return 1;
+	if (cache.ContainsKey((stone, times))) return cache[(stone, times)];
+	if (times == 0) return cache.Cache(stone, times, 1);
+	if (stone == 0) return cache.Cache(stone, times, Blink(1, times - 1, cache));
+	if (stone.TryBisect(out var bits)) {
+		result = Blink(bits.Item1, times - 1, cache) + Blink(bits.Item2, times - 1, cache);
+		return cache.Cache(stone, times, result);
 	}
-	if (stone == 0) {
-		result = Blink(1, times - 1, cache);
-		cache.Add((stone, times), result);
-		return result;
-	}
-	if (stone.ToString().Length % 2 == 0) {
-		var bits = stone.ToString().Bisect().Select(Int64.Parse).ToArray();
-		result = Blink(bits[0], times - 1, cache) + Blink(bits[1], times - 1, cache);
-		cache.Add((stone,times), result);
-		return result;
-	}
-	result = Blink(2024L * stone, times - 1, cache);
-	cache.Add((stone, times), result);
-	return result;
+	return cache.Cache(stone, times, Blink(2024L * stone, times - 1, cache));
 }
 
+public static class Extensions {
 
- public static class Extensions {
-// 	public static IEnumerable<long> Blink(this IEnumerable<long> stones) {
-// 		foreach (var stone in stones) {
-// 			if (stone == 0) {
-// 				yield return 1;
-// 			} else if (stone.ToString().Length % 2 == 0) {
-// 				foreach (var digit in stone.ToString().Bisect()) {
-// 					yield return Int64.Parse(digit);
-// 				}
-// 			} else {
-// 				yield return stone * 2024;
-// 			}
-// 		}
-// 	}
+	public static bool TryBisect(this long l, out (long, long) bits) {
+		bits = (0, 0);
+		var s = l.ToString();
+		var len = s.Length;
+		if (len % 2 != 0) return false;
+		bits = (Int64.Parse(s[0..(len/2)]), Int64.Parse(s[(len/2)..]));
+		return true;
+	}
+
+	public static long Cache(this Dictionary<(long, int), long> cache, long stone, int times, long value) {
+		cache.TryAdd((stone, times), value);
+		return value;
+	}
+
 	public static IEnumerable<string> Bisect(this string s) {
 		var len = s.Length / 2;
 		yield return s[0..len];
 		yield return s[len..];
 	}
-
-// 	public static void Write(this IEnumerable<long> stones) {
-// 		foreach (var stone in stones) {
-// 			Console.Write(stone);
-// 			Console.Write(" ");
-// 		}
-// 		Console.WriteLine();
-// 	}
 }
