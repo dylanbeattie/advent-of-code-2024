@@ -1,6 +1,6 @@
 using System.Runtime.InteropServices;
 
-var grid = File.ReadAllLines("input.txt")
+var grid = File.ReadAllLines("scratch.txt")
 	.Select(line => line.ToCharArray())
 	.ToArray();
 
@@ -20,29 +20,37 @@ for (var row = 0; row < regions.Length; row++) {
 	}
 }
 
-//foreach (var thing in areas) {
-//	Console.WriteLine(thing.Key + " = " + thing.Value);
-//}
-
-var part1 = 0;
-foreach (var thing in regionsToPerimeters) {
-	//Console.WriteLine(thing.Key + " = " + thing.Value);
-	part1 += thing.Value * areas[thing.Key];
-}
-
+var part1 = regionsToPerimeters.Sum(pair => pair.Value * areas[pair.Key]);
 Console.WriteLine(part1);
 
+Dictionary<int, List<(int,int)>> corners = new();
+for (var row = -1; row < regions.Length; row++) {
+	for (var col = -1; col < regions[0].Length; col++) {
+		var region = regions.At(row,col);
+		corners.TryAdd(region, new());
+		var found = regions.FindCorners(row,col).Distinct();
+		Console.Write(region + ": ");
+		foreach(var finding in found) {
+			Console.WriteLine("   " + finding.row + ", " + finding.col);
+		}
+		corners[region].AddRange();
+	}
+}
+Console.WriteLine(String.Empty.PadRight(72, '-'));
+for (var row = 0; row < regions.Length; row++) {
+	for (var col = 0; col < regions[row].Length; col++) {
+		Console.Write(regions[row][col]);
+	}
+	Console.WriteLine();
+}
 
+corners.Remove(0);
+foreach(var region in corners.Keys) {
+	Console.Write($"{region}: ");
+	Console.Write(String.Join(", ", corners[region].Distinct().Select(pair => $"({pair.Item1},{pair.Item2})")));
+	Console.WriteLine();
+}
 
-
-
-
-//for (var row = 0; row < regions.Length; row++) {
-//	for (var col = 0; col < regions[row].Length; col++) {
-//		Console.Write($"{regions[row][col]} ");
-//	}
-//	Console.WriteLine();
-//}
 
 public static class Extensions {
 	public static int[][] MapRegions(this char[][] grid) {
@@ -64,6 +72,50 @@ public static class Extensions {
 		}
 
 		return result;
+	}
+
+	public static IEnumerable<(int row, int col)> FindCorners(this int[][] grid, int row, int col) {
+		if (grid.HasCornerAt(row-1,col-1)) yield return(row-1,col-1);
+		if (grid.HasCornerAt(row-1,col)) yield return(row-1,col-1);
+		if (grid.HasCornerAt(row-1,col+1)) yield return(row-1,col-1);
+		if (grid.HasCornerAt(row,col-1)) yield return(row-1,col-1);
+		if (grid.HasCornerAt(row, col)) yield return (row, col);
+		if (grid.HasCornerAt(row, col + 1)) yield return (row, col + 1);
+		if (grid.HasCornerAt(row + 1, col-1)) yield return (row + 1, col);
+		if (grid.HasCornerAt(row + 1, col)) yield return (row + 1, col);
+		if (grid.HasCornerAt(row + 1, col + 1)) yield return (row + 1, col + 1);
+	}
+
+	private static bool HasCornerAt(this int[][] grid, int row, int col) {
+		//  Console.WriteLine($"{row}, {col} ===========================");
+		var nw = grid.At(row, col);
+		var ne = grid.At(row, col + 1);
+		var sw = grid.At(row + 1, col);
+		var se = grid.At(row + 1, col + 1);
+		//  Console.WriteLine($"""
+		//      {nw} {ne}
+		//      {sw} {se}
+
+		//  """);
+
+		var bits = (nw == ne ? 1 : 0, nw == sw ? 1 : 0, nw == se ? 1 : 0);
+		// Console.WriteLine($"{bits.Item1}{bits.Item2}{bits.Item3}");
+		var result =  bits switch {
+			(0, 1, 0) => false,
+			(1, 0, 0) => false,
+			(1, 1, 1) => false,
+			_ => true
+		};
+		// if (result) Console.WriteLine($"corner at {row}, {col}!");
+		return result;
+	}
+
+	public static int At(this int[][] grid, int row, int col) {
+		if (row < 0) return 0;
+		if (col < 0) return 0;
+		if (row >= grid.Length) return 0;
+		if (col >= grid[row].Length) return 0;
+		return grid[row][col];
 	}
 
 	private static void CheckNeighbours(char c, int regionId, char[][] grid, int[][] result, int row, int col) {
