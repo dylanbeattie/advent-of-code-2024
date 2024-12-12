@@ -68,11 +68,11 @@ Console.WriteLine(part2);
 
 public static class Extensions {
 	public static int[][] MapRegions(this char[][] grid) {
-		int[][] result = new int[grid.Length][];
-		for (int i = 0; i < result.Length; i++) result[i] = new int[grid[0].Length];
-		int regionId = 1;
-		for (int r = 0; r < grid.Length; r++) {
-			for (int c = 0; c < grid[r].Length; c++) {
+		var result = new int[grid.Length][];
+		for (var i = 0; i < result.Length; i++) result[i] = new int[grid[0].Length];
+		var regionId = 1;
+		for (var r = 0; r < grid.Length; r++) {
+			for (var c = 0; c < grid[r].Length; c++) {
 				if (result[r][c] != 0) continue;
 				result[r][c] = regionId;
 				CheckNeighbours(grid[r][c], regionId, grid, result, r, c);
@@ -127,49 +127,16 @@ public static class Extensions {
 		return '┛';
 	}
 
-
 	public static char Left(this int[][] grid, int row, int col) => grid.At(row,col-1) == grid.At(row,col) ? ' ' : '┃';
 	public static char Right(this int[][] grid, int row, int col) => grid.At(row,col+1) == grid.At(row,col) ? ' ' : '┃';
 	public static char Top(this int[][] grid, int row, int col) => grid.At(row-1,col) == grid.At(row,col) ? ' ' : '━';
 	public static char Bottom(this int[][] grid, int row, int col) => grid.At(row+1,col) == grid.At(row,col) ? ' ' : '━';
 
-
-	// public static IEnumerable<(int row, int col)> FindCorners(this int[][] grid, int row, int col) {
-
-
-
-	// }
-
-	// private static bool HasCornerAt(this int[][] grid, int row, int col) {
-	// 	//  Console.WriteLine($"{row}, {col} ===========================");
-	// 	var nw = grid.At(row, col);
-	// 	var ne = grid.At(row, col + 1);
-	// 	var sw = grid.At(row + 1, col);
-	// 	var se = grid.At(row + 1, col + 1);
-	// 	//  Console.WriteLine($"""
-	// 	//      {nw} {ne}
-	// 	//      {sw} {se}
-
-	// 	//  """);
-
-	// 	var bits = (nw == ne ? 1 : 0, nw == sw ? 1 : 0, nw == se ? 1 : 0);
-	// 	// Console.WriteLine($"{bits.Item1}{bits.Item2}{bits.Item3}");
-	// 	var result =  bits switch {
-	// 		(0, 1, 0) => false,
-	// 		(1, 0, 0) => false,
-	// 		(1, 1, 1) => false,
-	// 		_ => true
-	// 	};
-	// 	// if (result) Console.WriteLine($"corner at {row}, {col}!");
-	// 	return result;
-	// }
-
 	public static int At(this int[][] grid, int row, int col) {
 		if (row < 0) return 0;
 		if (col < 0) return 0;
 		if (row >= grid.Length) return 0;
-		if (col >= grid[row].Length) return 0;
-		return grid[row][col];
+		return col >= grid[row].Length ? 0 : grid[row][col];
 	}
 
 	private static void CheckNeighbours(char c, int regionId, char[][] grid, int[][] result, int row, int col) {
