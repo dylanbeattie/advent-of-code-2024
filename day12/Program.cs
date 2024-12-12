@@ -1,20 +1,51 @@
-﻿var grid = new[] { "AABBAA" } // File.ReadAllLines("example.txt")
+using System.Runtime.InteropServices;
+
+var grid = File.ReadAllLines("input.txt")
 	.Select(line => line.ToCharArray())
 	.ToArray();
 
-var map = grid.IdMap();
-for (var row = 0; row < map.Length; row++)
-{
-	for (var col = 0; col < map[row].Length; col++)
-	{
-		Console.Write($"{map[row][col]} ");
+var perimeterMap = grid.MapPerimeters();
+var regions = grid.MapRegions();
+
+var areas = regions.SelectMany(line => line).GroupBy(cell => cell)
+	.ToDictionary(group => group.Key, group => group.Count());
+
+Dictionary<int, int> regionsToPerimeters = new();
+
+for (var row = 0; row < regions.Length; row++) {
+	for (var col = 0; col < regions[row].Length; col++) {
+		var region = regions[row][col];
+		CollectionsMarshal.GetValueRefOrAddDefault(regionsToPerimeters, region, out _)
+			+= perimeterMap[row][col];
 	}
-	Console.WriteLine();
 }
 
-public static class Extensions
-{
-	public static int[][] IdMap(this char[][] grid) {
+//foreach (var thing in areas) {
+//	Console.WriteLine(thing.Key + " = " + thing.Value);
+//}
+
+var part1 = 0;
+foreach (var thing in regionsToPerimeters) {
+	//Console.WriteLine(thing.Key + " = " + thing.Value);
+	part1 += thing.Value * areas[thing.Key];
+}
+
+Console.WriteLine(part1);
+
+
+
+
+
+
+//for (var row = 0; row < regions.Length; row++) {
+//	for (var col = 0; col < regions[row].Length; col++) {
+//		Console.Write($"{regions[row][col]} ");
+//	}
+//	Console.WriteLine();
+//}
+
+public static class Extensions {
+	public static int[][] MapRegions(this char[][] grid) {
 		int[][] result = new int[grid.Length][];
 
 		for (int i = 0; i < result.Length; i++) {
@@ -65,21 +96,17 @@ public static class Extensions
 		}
 	}
 
-	public static int[][] BuildMap(this char[][] grid)
-	{
+	public static int[][] MapPerimeters(this char[][] grid) {
 		var result = grid.Select(row => row.Select(_ => 0).ToArray()).ToArray();
-		for (var row = 0; row < grid.Length; row++)
-		{
-			for (var col = 0; col < grid[row].Length; col++)
-			{
+		for (var row = 0; row < grid.Length; row++) {
+			for (var col = 0; col < grid[row].Length; col++) {
 				result[row][col] = grid.Perimeter(row, col);
 			}
 		}
 		return result;
 	}
 
-	public static int Perimeter(this char[][] grid, int row, int col)
-	{
+	public static int Perimeter(this char[][] grid, int row, int col) {
 		var p = 0;
 		var me = grid[row][col];
 		if (row == 0 || grid[row - 1][col] != me) p++;
