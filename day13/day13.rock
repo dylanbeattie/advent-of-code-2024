@@ -1,4 +1,4 @@
-The river holds AAAA AAAAAAA
+The river holds cold torrent
 The moon holds lucid delusion
 Hellfire is a heartbreak
 
@@ -8,7 +8,7 @@ The claw is empty
 For every shadow in your soul
 If the shadow is over the river and the shadow is under the moon
 The claw is with the shadow
-otherwise
+Otherwise
 If the claw ain't silence
 Burn the claw with hellfire
 Rock the prize with the claw, yeah
@@ -18,29 +18,33 @@ Burn the claw with hellfire
 Rock the prize with the claw
 Give back the prize, baby
 
+Dawn is 0
+Sunrise is 1
+Noon is 2
+Sunset is 3
+Twilight is 4
+Midnight is 5
+Surrender is 6
 
-solve takes array and offset
-	if array ain't 6 return 0
-	let ax be array at 0
-	let ay be array at 1
-	let bx be array at 2
-	let by be array at 3
-	let x be array at 4
-	let y be array at 5
-	let x be with offset
-	let y be with offset
-	let n_lhs be x times ay minus y times ax
-	let n_rhs be bx times ay minus ax times by
-	let n be n_lhs over n_rhs
-	let m_lhs be y minus n times by
-	let m be m_lhs over ay
-	let int_m be m
-	turn down m
-	let int_n be n
-	turn down n
-	if m is int_m and n is int_n give back m times 3 with n
-	give back nothing
-end
+Victory takes the battlefield and the horror
+The answer is nothing
+If the battlefield ain't surrender give back nothing
+Let glory be the battlefield at sunrise
+let memory be the battlefield at dawn
+Let sorrow be the battlefield at sunset
+Let valour be the battlefield at noon
+Put the horror with the battlefield at twilight into reflection
+Put the horror with the battlefield at midnight into redemption
+Let the enemy be reflection of glory without redemption of memory
+Let the ocean be valour of glory without memory of sorrow
+Let your nemesis be the enemy over the ocean
+Let Valhalla be redemption without your nemesis of sorrow
+Let the honour be Valhalla over glory
+Let hollow be the honour. Turn down the honour
+Let time be your nemesis. Turn down your nemesis
+If the honour is hollow and your nemesis is time
+Let the answer be the honour of sunset with your nemesis, yeah
+Give back the answer, oh
 
 
 input is empty
@@ -62,14 +66,14 @@ debug inputs
 
 let part1 be 0
 for input in inputs
-call solve with input, 0 into solution
+call Victory with input, 0 into solution
 part1 is with solution
 yeah
 shout part1
 
 let part2 be 0
 for input in inputs
-call solve with input, 10000000000000 into solution
+call Victory with input, 10000000000000 into solution
 part2 is with solution
 yeah
 shout part2
