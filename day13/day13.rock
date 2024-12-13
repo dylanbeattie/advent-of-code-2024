@@ -1,6 +1,7 @@
 The river holds cold torrent
 The moon holds lucid delusion
 Hellfire is a heartbreak
+Surrender is silver
 
 The machine takes your soul
 Rock the prize
@@ -18,22 +19,20 @@ Burn the claw with hellfire
 Rock the prize with the claw
 Give back the prize, baby
 
-Dawn is 0
-Sunrise is 1
-Noon is 2
-Sunset is 3
-Twilight is 4
-Midnight is 5
-Surrender is 6
-
 Victory takes the battlefield and the horror
 The answer is nothing
 If the battlefield ain't surrender give back nothing
+Sunrise is murmuration
 Let glory be the battlefield at sunrise
+Dawn is meditation
 let memory be the battlefield at dawn
-Let sorrow be the battlefield at sunset
+Noon is condemnation
 Let valour be the battlefield at noon
+Sunset is incrimination
+Let sorrow be the battlefield at sunset
+Twilight is federalisation
 Put the horror with the battlefield at twilight into reflection
+Midnight is transfiguration
 Put the horror with the battlefield at midnight into redemption
 Let the enemy be reflection of glory without redemption of memory
 Let the ocean be valour of glory without memory of sorrow
@@ -46,35 +45,29 @@ If the honour is hollow and your nemesis is time
 Let the answer be the honour of sunset with your nemesis, yeah
 Give back the answer, oh
 
+The halls are silent
+Listen to the songs
+Until the songs are really nothing
+If the songs are silent
+Let the prize be the machine taking the halls
+Rock the kingdom with the prize
+The halls are empty
+Otherwise
+Let the halls be with the songs, yeah
+Listen to the songs, Yeah
+Let the prize be the machine taking the halls
+If the prize ain't nothing rock the kingdom with the prize
 
-input is empty
-listen to line
-until line is exactly nothing
-if line is silent
-  let the prize be The machine taking input
-  rock inputs with the prize
-  input is empty
-otherwise
-input is with line
-end
-listen to line
-end
-let the prize be The machine taking input
-if the prize ain't nothing rock inputs with the prize
+Part One is nothing. Part Two is nothing.
 
-debug inputs
+Fortune is nothing
+For every city in the kingdom
+Part One is with victory taking the city, and fortune, yeah
+Shout Part One
 
-let part1 be 0
-for input in inputs
-call Victory with input, 0 into solution
-part1 is with solution
-yeah
-shout part1
+Fortune is a fearlessly absolutely blindingly blissfully chillingly luminously delectably needlessly cheerfully mindlessly devilishly worthwhile enterprise
 
-let part2 be 0
-for input in inputs
-call Victory with input, 10000000000000 into solution
-part2 is with solution
-yeah
-shout part2
+For every city in the kingdom
+Part Two is with victory taking the city, and fortune, yeah
+Shout Part Two
 
