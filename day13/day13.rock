@@ -1,0 +1,73 @@
+parse takes input
+rock numbers
+digits is empty
+for char in input
+if char is as high as "0" and char is as low as "9"
+digits is with char
+otherwise
+if digits ain't silence
+cast digits with 10
+rock numbers with digits
+end
+digits is empty
+yeah
+yeah
+if digits ain't silence
+cast digits with 10
+rock numbers with digits
+give back numbers
+yeah
+
+solve takes array and offset
+	let ax be array at 0
+	let ay be array at 1
+	let bx be array at 2
+	let by be array at 3
+	let x be array at 4
+	let y be array at 5
+	let x be with offset
+	let y be with offset
+	let n_lhs be x times ay minus y times ax
+	let n_rhs be bx times ay minus ax times by
+	let n be n_lhs over n_rhs
+	let m_lhs be y minus n times by
+	let m be m_lhs over ay
+	let int_m be m
+	turn down m
+	let int_n be n
+	turn down n
+	if m is int_m and n is int_n give back m times 3 with n
+	give back nothing
+end
+
+
+input is empty
+listen to line
+until line is exactly nothing
+if line is silent
+  let numbers be parse taking input
+  rock inputs with numbers
+  input is empty
+otherwise
+input is with line
+end
+listen to line
+end
+let numbers be parse taking input
+rock inputs with numbers
+
+
+let part1 be 0
+for input in inputs
+call solve with input, 0 into solution
+part1 is with solution
+yeah
+
+let part2 be 0
+for input in inputs
+debug input
+call solve with input, 10000000000000 into solution
+part2 is with solution
+yeah
+shout part2
+
