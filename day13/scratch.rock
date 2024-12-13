@@ -1,0 +1,12 @@
+(ASCII:
+= is 61
+/ is 47
+0 is 48
+9 is 57
+)
+if "=" is higher than "/" shout "yeah 1"
+if "=" is lower than "9" shout "yeah 2"
+if "=" is higher than "/" and "=" is lower than "9"
+shout "yeah"
+otherwise
+shout "nope"
