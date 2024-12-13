@@ -1,24 +1,25 @@
-parse takes input
-rock numbers
-digits is empty
-for char in input
-if char is as high as "0" and char is as low as "9"
-digits is with char
+The machine takes your tokens
+Rock the prize
+The claw is empty
+For every note in your tokens
+If the note is as high as "0" and the note is as low as "9"
+The claw is with the note
 otherwise
-if digits ain't silence
-cast digits with 10
-rock numbers with digits
+If the claw ain't silence
+Cast the claw with 10
+rock the prize with The claw
 end
-digits is empty
+The claw is empty
 yeah
 yeah
-if digits ain't silence
-cast digits with 10
-rock numbers with digits
-give back numbers
+if The claw ain't silence
+cast The claw with 10
+rock the prize with The claw
+give back the prize
 yeah
 
 solve takes array and offset
+	if array ain't 6 return 0
 	let ax be array at 0
 	let ay be array at 1
 	let bx be array at 2
@@ -45,27 +46,28 @@ input is empty
 listen to line
 until line is exactly nothing
 if line is silent
-  let numbers be parse taking input
-  rock inputs with numbers
+  let the prize be The machine taking input
+  rock inputs with the prize
   input is empty
 otherwise
 input is with line
 end
 listen to line
 end
-let numbers be parse taking input
-rock inputs with numbers
+let the prize be The machine taking input
+if the prize ain't nothing rock inputs with the prize
 
+debug inputs
 
 let part1 be 0
 for input in inputs
 call solve with input, 0 into solution
 part1 is with solution
 yeah
+shout part1
 
 let part2 be 0
 for input in inputs
-debug input
 call solve with input, 10000000000000 into solution
 part2 is with solution
 yeah
