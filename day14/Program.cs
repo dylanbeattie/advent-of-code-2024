@@ -8,24 +8,44 @@ var robots = File.ReadAllLines("input.txt")
 	.Select(numbers => new Robot(numbers[0], numbers[1], numbers[2], numbers[3])).ToList();
 
 
-for (var seconds = 0; seconds < 100; seconds++) {
+for (var seconds = 0; seconds < Int32.MaxValue; seconds++) {
+	foreach (var robot in robots) {
+		if (
+			robots.Any(r => r.X == robot.X - 1 && r.Y == robot.Y + 1)
+			&&
+ 			robots.Any(r => r.X == robot.X + 1 && r.Y == robot.Y + 1)
+			&&
+			robots.Any(r => r.X == robot.X - 2 && r.Y == robot.Y + 2)
+			&&
+			robots.Any(r => r.X == robot.X + 2 && r.Y == robot.Y + 2)
+			&&
+			robots.Any(r => r.X == robot.X - 3 && r.Y == robot.Y + 3)
+			&&
+			robots.Any(r => r.X == robot.X + 3 && r.Y == robot.Y + 3)
+		) {
+			for (var y = 0; y < H; y++) {
+				for (var x = 0; x < W; x++) {
+					var count = robots.Where(r => r.X == x && r.Y == y).Count();
+					Console.Write(count > 0 ? count : ".");
+				}
+				Console.WriteLine();
+			}
+
+			Console.WriteLine("CHRISTMAS TREEEEEEEEE!");
+			Console.WriteLine(seconds);
+			Console.ReadKey(false);
+		}
+	}
 	foreach (var robot in robots) robot.Move(W, H);
 }
 
-for (var y = 0; y < H; y++) {
-	for (var x = 0; x < W; x++) {
-		var count = robots.Where(r => r.X == x && r.Y == y).Count();
-		Console.Write(count > 0 ? count : ".");
-	}
-	Console.WriteLine();
-}
 
-var nw = robots.Where(r => r.X < W/2 && r.Y < H/2).Count();
-var ne = robots.Where(r => r.X < W/2 && r.Y > H/2).Count();
-var sw = robots.Where(r => r.X > W/2 && r.Y < H/2).Count();
-var se = robots.Where(r => r.X > W/2 && r.Y > H/2).Count();
+var nw = robots.Where(r => r.X < W / 2 && r.Y < H / 2).Count();
+var ne = robots.Where(r => r.X < W / 2 && r.Y > H / 2).Count();
+var sw = robots.Where(r => r.X > W / 2 && r.Y < H / 2).Count();
+var se = robots.Where(r => r.X > W / 2 && r.Y > H / 2).Count();
 
-var part1 = nw * ne * sw *se;
+var part1 = nw * ne * sw * se;
 Console.WriteLine($"Part 1: {part1}");
 
 
