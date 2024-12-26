@@ -1,6 +1,6 @@
 ﻿using System.Data;
 
-var grid = File.ReadAllLines("scratch2.txt")
+var grid = File.ReadAllLines("scratch1.txt")
 	.Select(line => line.ToCharArray()).ToArray();
 
 var costs = grid.Clone(() => Int32.MaxValue);
@@ -12,7 +12,6 @@ costs[reindeer.Row][reindeer.Col] = 0;
 var prev = grid.Clone(() => new List<(int, int)>());
 
 grid.Search(costs, reindeer.Row, reindeer.Col, 'e', prev);
-
 
 for (var row = 0; row < prev.Length; row++) {
 	for (var col = 0; col < prev[row].Length; col++) {
@@ -31,32 +30,10 @@ var shortests = paths.SelectMany(path =>path).Distinct();
 
 for (var row = 0; row < grid.Length; row++) {
 	for (var col = 0; col < grid[row].Length; col++) {
-		Console.Write(shortests.Contains((row,col)) ? "#" : ".");
+		Console.Write(shortests.Contains((row,col)) ? "x" : grid[row][col]);
 	}
 	Console.WriteLine();
 }
-
-
-// foreach (var s1 in prev[target.Row][target.Col]) {
-// 	foreach (var s2 in prev[s1.Item1][s1.Item2]) {
-// 		foreach (var s3 in prev[s2.Item1][s2.Item2]) {
-// 			foreach (var s4 in prev[s3.Item1][s3.Item2]) {
-// 				foreach (var s5 in prev[s4.Item1][s4.Item2]) {
-// 					Console.WriteLine(s5 + " > " + s4 + " > " + s3 + " > " + s2 + " > " + s1 + ">" + target);
-// 				}
-// 				Console.WriteLine(s4 + " > " + s3 + " > " + s2 + " > " + s1 + ">" + target);
-// 			}
-// 			Console.WriteLine(s3 + " > " + s2 + " > " + s1 + ">" + target);
-// 		}
-// 		Console.WriteLine(s2 + " > " + s1 + ">" + target);
-// 	}
-// 	Console.WriteLine(s1 + ">" + target);
-// }
-
-// var bucket = new List<string>();
-// prev.Backtrack(target.Row, target.Col, bucket);
-// foreach(var thing in bucket) Console.WriteLine(thing);
-
 
 for (var row = 0; row < costs.Length; row++) {
 	for (var col = 0; col < costs[row].Length; col++) {
@@ -84,9 +61,9 @@ public static class Extensions {
 		(int Row,int Col) target,
 		List<((int Row,int Col) Source, (int Row, int Col) Target)> visited
 	) {
-		//if (visited.Contains((source,target))) yield break;
-		//visited.Add((source,target));
 		if (source == target) yield return [ target ];
+		if (visited.Contains((source,target))) yield break;
+		visited.Add((source,target));
 		foreach(var step in prev[target.Row][target.Col]) {
 			foreach(var path in prev.FindAllPaths(source, step, visited)) {
 				yield return path.Concat( [ target ]);
@@ -100,7 +77,6 @@ public static class Extensions {
 		{ 'n', [ ('n', -1,0,1) , ('w', 0,-1,1001), ('e', 0,1, 1001) ] },
 		{ 's', [ ('s', 1,0,1) ,  ('w', 0,-1,1001), ('e', 0,1,1001) ] }
 	};
-
 
 	public static void Search(this char[][] grid, int[][] costs, int row, int col, char direction, List<(int, int)>[][] prev) {
 		foreach (var c in moves[direction]) {
