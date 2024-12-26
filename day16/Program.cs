@@ -1,4 +1,6 @@
-﻿var grid = File.ReadAllLines("scratch1.txt")
+﻿using System.Data;
+
+var grid = File.ReadAllLines("scratch2.txt")
 	.Select(line => line.ToCharArray()).ToArray();
 
 var costs = grid.Clone(() => Int32.MaxValue);
@@ -11,31 +13,50 @@ var prev = grid.Clone(() => new List<(int, int)>());
 
 grid.Search(costs, reindeer.Row, reindeer.Col, 'e', prev);
 
-foreach (var s1 in prev[target.Row][target.Col]) {
-	foreach (var s2 in prev[s1.Item1][s1.Item2]) {
-		foreach (var s3 in prev[s2.Item1][s2.Item2]) {
-			foreach (var s4 in prev[s3.Item1][s3.Item2]) {
-				foreach (var s5 in prev[s4.Item1][s4.Item2]) {
-					Console.WriteLine(s5 + " > " + s4 + " > " + s3 + " > " + s2 + " > " + s1);
-				}
-				Console.WriteLine(s4 + " > " + s3 + " > " + s2 + " > " + s1);
-			}
-			Console.WriteLine(s3 + " > " + s2 + " > " + s1);
-		}
-		Console.WriteLine(s2 + " > " + s1);
-	}
-	Console.WriteLine(s1);
-}
-
-// var bucket = new List<string>();
-// prev.Backtrack(target.Row, target.Col, bucket);
-// foreach(var thing in bucket) Console.WriteLine(thing);
 
 for (var row = 0; row < prev.Length; row++) {
 	for (var col = 0; col < prev[row].Length; col++) {
 		Console.WriteLine($"{row},{col}:      " + String.Join(" ", prev[row][col].ToArray()));
 	}
 }
+
+
+var paths = prev.FindAllPaths(reindeer, target, []).ToList();
+
+foreach(var path in paths) {
+	Console.WriteLine(String.Join(">", path));
+}
+
+var shortests = paths.SelectMany(path =>path).Distinct();
+
+for (var row = 0; row < grid.Length; row++) {
+	for (var col = 0; col < grid[row].Length; col++) {
+		Console.Write(shortests.Contains((row,col)) ? "#" : ".");
+	}
+	Console.WriteLine();
+}
+
+
+// foreach (var s1 in prev[target.Row][target.Col]) {
+// 	foreach (var s2 in prev[s1.Item1][s1.Item2]) {
+// 		foreach (var s3 in prev[s2.Item1][s2.Item2]) {
+// 			foreach (var s4 in prev[s3.Item1][s3.Item2]) {
+// 				foreach (var s5 in prev[s4.Item1][s4.Item2]) {
+// 					Console.WriteLine(s5 + " > " + s4 + " > " + s3 + " > " + s2 + " > " + s1 + ">" + target);
+// 				}
+// 				Console.WriteLine(s4 + " > " + s3 + " > " + s2 + " > " + s1 + ">" + target);
+// 			}
+// 			Console.WriteLine(s3 + " > " + s2 + " > " + s1 + ">" + target);
+// 		}
+// 		Console.WriteLine(s2 + " > " + s1 + ">" + target);
+// 	}
+// 	Console.WriteLine(s1 + ">" + target);
+// }
+
+// var bucket = new List<string>();
+// prev.Backtrack(target.Row, target.Col, bucket);
+// foreach(var thing in bucket) Console.WriteLine(thing);
+
 
 for (var row = 0; row < costs.Length; row++) {
 	for (var col = 0; col < costs[row].Length; col++) {
@@ -46,9 +67,9 @@ for (var row = 0; row < costs.Length; row++) {
 			_ => ConsoleColor.White
 		};
 		if (cost == Int32.MaxValue) {
-			Console.Write("###### ");
+			Console.Write("#### ");
 		} else {
-			Console.Write($"{cost:000000} ");
+			Console.Write($"{cost:0000} ");
 		}
 	}
 	Console.WriteLine();
@@ -57,17 +78,21 @@ for (var row = 0; row < costs.Length; row++) {
 Console.WriteLine(costs[target.Row][target.Col]);
 
 public static class Extensions {
-
-	public static void Backtrack(this List<(int, int)>[][] prev, int row, int col) {
-		if (prev[row][col].Count == 0) return;;
-		List<string> lists = [];
-		foreach(var pair in prev[row][col]) {
-			foreach(var list in prev.Backtrack(pair.Item1, pair.Item2)) {
-				Console.Write(list);
+	public static IEnumerable<IEnumerable<(int,int)>> FindAllPaths(
+		this List<(int Row,int Col)>[][] prev, 
+		(int Row,int Col)source, 
+		(int Row,int Col) target,
+		List<((int Row,int Col) Source, (int Row, int Col) Target)> visited
+	) {
+		//if (visited.Contains((source,target))) yield break;
+		//visited.Add((source,target));
+		if (source == target) yield return [ target ];
+		foreach(var step in prev[target.Row][target.Col]) {
+			foreach(var path in prev.FindAllPaths(source, step, visited)) {
+				yield return path.Concat( [ target ]);
 			}
 		}
 	}
-
 
 	private static Dictionary<char, (char Next, int Row, int Col, int Cost)[]> moves = new() {
 		{ 'e', [ ('e', 0,1,1) ,  ('s', 1,0,1001), ('n', -1,0, 1001) ] },
@@ -81,7 +106,10 @@ public static class Extensions {
 		foreach (var c in moves[direction]) {
 			var rr = row + c.Row;
 			var cc = col + c.Col;
-			if ("E.".Contains(grid[rr][cc]) && costs[rr][cc] >= costs[row][col] + c.Cost) {
+			var oldCost = costs[rr][cc];
+			var newCost = costs[row][col] + c.Cost;
+			if ("E.".Contains(grid[rr][cc]) && newCost <= oldCost) {
+				if (newCost < oldCost) prev[rr][cc].Clear();
 				prev[rr][cc].Add((row, col));
 				costs[rr][cc] = costs[row][col] + c.Cost;
 				grid.Search(costs, rr, cc, c.Next, prev);
