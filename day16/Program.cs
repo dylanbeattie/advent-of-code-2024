@@ -1,6 +1,7 @@
-﻿using System.Data;
 
-var grid = File.ReadAllLines("scratch1.txt")
+using System.Text;
+
+var grid = File.ReadAllLines("example1.txt")
 	.Select(line => line.ToCharArray()).ToArray();
 
 var costs = grid.Clone(() => Int32.MaxValue);
@@ -11,62 +12,110 @@ costs[reindeer.Row][reindeer.Col] = 0;
 
 var prev = grid.Clone(() => new List<(int, int)>());
 
+Console.Clear();
+Console.OutputEncoding = Encoding.UTF8;
+;
 grid.Search(costs, reindeer.Row, reindeer.Col, 'e', prev);
 
-for (var row = 0; row < prev.Length; row++) {
-	for (var col = 0; col < prev[row].Length; col++) {
-		Console.WriteLine($"{row},{col}:      " + String.Join(" ", prev[row][col].ToArray()));
-	}
-}
+grid.Print(costs, prev);
 
-
-var paths = prev.FindAllPaths(reindeer, target, []).ToList();
-
-foreach(var path in paths) {
-	Console.WriteLine(String.Join(">", path));
-}
-
-var shortests = paths.SelectMany(path =>path).Distinct();
+var walked = new List<(int, int)>();
+var cheapest = new List<(int, int)>();
+costs.Backtrack(Int32.MaxValue, target, reindeer, walked, cheapest);
 
 for (var row = 0; row < grid.Length; row++) {
 	for (var col = 0; col < grid[row].Length; col++) {
-		Console.Write(shortests.Contains((row,col)) ? "x" : grid[row][col]);
+		Console.Write(cheapest.Contains((row, col)) ? "x" : grid[row][col]);
 	}
 	Console.WriteLine();
 }
 
-for (var row = 0; row < costs.Length; row++) {
-	for (var col = 0; col < costs[row].Length; col++) {
-		var cost = costs[row][col];
-		Console.ForegroundColor = grid[row][col] switch {
-			'E' => ConsoleColor.Green,
-			'S' => ConsoleColor.Red,
-			_ => ConsoleColor.White
-		};
-		if (cost == Int32.MaxValue) {
-			Console.Write("#### ");
-		} else {
-			Console.Write($"{cost:0000} ");
-		}
-	}
-	Console.WriteLine();
-}
+
+//for (var row = 0; row < prev.Length; row++) {
+//	for (var col = 0; col < prev[row].Length; col++) {
+//		Console.WriteLine($"{row},{col}:      " + String.Join(" ", prev[row][col].ToArray()));
+//	}
+//}
+
+//var paths = prev.FindAllPaths(reindeer, target, []).ToList();
+
+//foreach (var path in paths) {
+//	Console.WriteLine(String.Join(">", path));
+//}
+
+//var shortests = paths.SelectMany(path => path).Distinct();
+
 
 Console.WriteLine(costs[target.Row][target.Col]);
 
 public static class Extensions {
-	public static IEnumerable<IEnumerable<(int,int)>> FindAllPaths(
-		this List<(int Row,int Col)>[][] prev, 
-		(int Row,int Col)source, 
-		(int Row,int Col) target,
-		List<((int Row,int Col) Source, (int Row, int Col) Target)> visited
+	public static void Print(this char[][] grid, int[][] costs, List<(int, int)>[][] prev) {
+		for (var row = 0; row < costs.Length; row++) {
+			for (var col = 0; col < costs[row].Length; col++) {
+				var cost = costs[row][col];
+				Console.ForegroundColor = grid[row][col] switch {
+					'E' => ConsoleColor.Green,
+					'S' => ConsoleColor.Red,
+					_ => ConsoleColor.White
+				};
+				Console.Write(prev[row][col].Contains((row, col - 1)) ? "→" : " ");
+				if (grid[row][col] == '#') {
+					Console.Write("█████");
+				} else if (cost == Int32.MaxValue) {
+					Console.Write("     ");
+				} else {
+					Console.Write($"{cost:00000}");
+				}
+				Console.Write(prev[row][col].Contains((row, col + 1)) ? "←" : " ");
+			}
+
+			Console.WriteLine();
+			for (var col = 0; col < costs[row].Length; col++) {
+				if (grid[row][col] == '#') {
+					Console.Write(" █████ ");
+				} else if (costs[row][col] == Int32.MaxValue) {
+					Console.Write("       ");
+				} else if (row + 1 < costs.Length) {
+					Console.Write((prev[row + 1][col].Contains((row, col)), prev[row][col].Contains((row + 1, col))) switch {
+						(true, true) => "   ↕   ",
+						(true, false) => "   ↓   ",
+						(false, true) => "   ↑   ",
+						_ => "       "
+					});
+				}
+			}
+			Console.WriteLine();
+		}
+	}
+
+	public static void Backtrack(this int[][] costs, int cost, (int Row, int Col) target, (int Row, int Col) source,
+		List<(int, int)> walked, List<(int, int)> cheapest) {
+		if (target.Row < 0 || target.Row > costs.Length) return;
+		if (target.Col < 0 || target.Col > costs[target.Row].Length) return;
+		if (walked.Contains(target)) return;
+		if (target == source) return;
+		walked.Add(target);
+		if (costs[target.Row][target.Col] >= cost) return;
+		cost = costs[target.Row][target.Col];
+		cheapest.Add(target);
+		costs.Backtrack(cost, (target.Row + 1, target.Col), source, walked, cheapest);
+		costs.Backtrack(cost, (target.Row - 1, target.Col), source, walked, cheapest);
+		costs.Backtrack(cost, (target.Row, target.Col - 1), source, walked, cheapest);
+		costs.Backtrack(cost, (target.Row, target.Col + 1), source, walked, cheapest);
+	}
+
+	public static IEnumerable<IEnumerable<(int, int)>> FindAllPaths(
+		this List<(int Row, int Col)>[][] prev,
+		(int Row, int Col) source,
+		(int Row, int Col) target,
+		List<((int Row, int Col) Source, (int Row, int Col) Target)> visited
 	) {
-		if (source == target) yield return [ target ];
-		if (visited.Contains((source,target))) yield break;
-		visited.Add((source,target));
-		foreach(var step in prev[target.Row][target.Col]) {
-			foreach(var path in prev.FindAllPaths(source, step, visited)) {
-				yield return path.Concat( [ target ]);
+		if (source == target) yield return [target];
+		if (visited.Contains((source, target))) yield break;
+		visited.Add((source, target));
+		foreach (var step in prev[target.Row][target.Col]) {
+			foreach (var path in prev.FindAllPaths(source, step, visited)) {
+				yield return path.Concat([target]);
 			}
 		}
 	}
@@ -79,17 +128,19 @@ public static class Extensions {
 	};
 
 	public static void Search(this char[][] grid, int[][] costs, int row, int col, char direction, List<(int, int)>[][] prev) {
+		Console.SetCursorPosition(0, 0);
+		grid.Print(costs, prev);
+		if (grid[row][col] == 'E') return;
 		foreach (var c in moves[direction]) {
 			var rr = row + c.Row;
 			var cc = col + c.Col;
 			var oldCost = costs[rr][cc];
 			var newCost = costs[row][col] + c.Cost;
-			if ("E.".Contains(grid[rr][cc]) && newCost <= oldCost) {
-				if (newCost < oldCost) prev[rr][cc].Clear();
-				prev[rr][cc].Add((row, col));
-				costs[rr][cc] = costs[row][col] + c.Cost;
-				grid.Search(costs, rr, cc, c.Next, prev);
-			}
+			if (!"E.".Contains(grid[rr][cc]) || newCost > oldCost) continue;
+			if (prev[rr][cc].Any() && newCost < oldCost && oldCost - newCost != 1000) prev[rr][cc].Clear();
+			prev[rr][cc].Add((row, col));
+			costs[rr][cc] = costs[row][col] + c.Cost;
+			grid.Search(costs, rr, cc, c.Next, prev);
 		}
 	}
 
