@@ -1,0 +1,54 @@
+Drinking Game wants glasses
+  rock the freezer with 701, 301, 132, 57, 23, 10, 4, 1
+  my girl is like Cinderella
+  let the shelf be glasses plus my girl
+  for the ice in the freezer
+      let bottomless be the ice
+      put the ice into my glass
+      while bottomless is less than the shelf
+          put glasses at bottomless into my drink
+          let Jaeger be bottomless
+          let your shot be Jaeger without the ice
+          while Jaeger >= the ice and glasses at your shot is greater than my drink
+              glasses at Jaeger = glasses at your shot
+              let Jaeger be Jaeger without the ice
+              let your shot be Jaeger without the ice
+          yeah
+          put my drink into glasses at Jaeger
+          build my glass up
+          build bottomless up, baby
+  Yeah
+  give back glasses
+  Yeah
+
+
+Listen to the world
+until the world is nothing
+    shout the world
+    split the world into the places with "   "
+    Shout "Places: " with the places
+    Rock the guys with the places at 0
+    Rock the girls with the places at 1
+    Shout "Guys:" with the guys
+    Rock the locations with the world
+    Listen to the world
+
+Let the guys be Drinking Game taking the guys
+Shout the guys
+Let the girls be Drinking Game taking the girls
+Shout the girls
+let Party be the guys +0
+shout "Party: " with Party
+let sum be 0
+for count in Party
+    let xx be the guys at count
+    let xy be the girls at count
+    cast xx with 10
+    cast xy with 10
+    let diff = xx-xy
+    if diff <0 then diff = diff *-1
+    shout "Diff:" with diff
+    sum is with diff
+    end
+
+Shout "Part 1: " with sum
